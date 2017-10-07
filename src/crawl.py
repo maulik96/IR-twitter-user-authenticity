@@ -8,7 +8,7 @@ t = Twarc("22GyvUC4Jg89Eh1PuKRh3mwRo",
           "852540250467467266-NoSAf6ZXmWZnr01CdUIfYBP5Z4cLZGJ",
           "kWP6L9F4YCUAsvwuaruuCUPMc4JqAE2jhJA8bhuuQSCSu")
 
-TWEETS_TO_CRAWL = 100
+TWEETS_TO_CRAWL = 1000000
 DATA_DIR = join(dirname(dirname(realpath(__file__))), "data")
 
 def getNewTweet():
@@ -44,7 +44,7 @@ if __name__ == '__main__':
             tw["is_retweet"] = True
             tw["retweeted_status_id"] = tweet["retweeted_status"]["id"]
         tweets.append(tw)
-        if count%10 == 0:
+        if count%1000 == 0:
             with open(outfile) as f:
                 data = json.load(f);
             data.append(tweets)
