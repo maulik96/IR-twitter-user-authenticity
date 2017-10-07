@@ -1,16 +1,12 @@
 import json
 import sys
-from os.path import dirname, realpath, join, exists
 from twarc import Twarc
+from constants import *
 
 t = Twarc("22GyvUC4Jg89Eh1PuKRh3mwRo", 
           "m75gOSwIccfzYLWxwMCpHEldxgzYP83pTOSqAFbumQ5B6OF1vC",
           "852540250467467266-NoSAf6ZXmWZnr01CdUIfYBP5Z4cLZGJ",
           "kWP6L9F4YCUAsvwuaruuCUPMc4JqAE2jhJA8bhuuQSCSu")
-
-TWEETS_TO_CRAWL = 1000000
-DATA_DIR = join(dirname(dirname(realpath(__file__))), "data")
-outfile = join(DATA_DIR, "search.json")
 
 def getNewTweet():
     tweet = {
@@ -30,7 +26,7 @@ def getNewTweet():
 
 
 if __name__ == '__main__':
-    with open(outfile, "w") as f:
+    with open(DATA_FILE, "w") as f:
         json.dump([], f)
     tweets = []
     count = 0
@@ -44,15 +40,15 @@ if __name__ == '__main__':
             tw["is_retweet"] = True
             tw["retweeted_status_id"] = tweet["retweeted_status"]["id"]
         tweets.append(tw)
-        if count%1000 == 0:
-            with open(outfile) as f:
+        if count%(TWEETS_TO_CRAWL/10) == 0:
+            with open(DATA_FILE) as f:
                 data = json.load(f);
             data += tweets
             tweets = []
-            with open(outfile, 'w') as f:
+            with open(DATA_FILE, 'w') as f:
                 json.dump(data, f, indent=2)
             sys.stdout.write('\r')
-            sys.stdout.write('{} tweets searched. {}% done.'.format(count, (count*100.0)/TWEETS_TO_CRAWL))
+            sys.stdout.write('{} tweets searched'.format(count))
             sys.stdout.flush()
         if count == TWEETS_TO_CRAWL:
             break
