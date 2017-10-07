@@ -10,6 +10,7 @@ t = Twarc("22GyvUC4Jg89Eh1PuKRh3mwRo",
 
 TWEETS_TO_CRAWL = 1000000
 DATA_DIR = join(dirname(dirname(realpath(__file__))), "data")
+outfile = join(DATA_DIR, "search.json")
 
 def getNewTweet():
     tweet = {
@@ -17,7 +18,7 @@ def getNewTweet():
         "favorite_count": "",
         "full_text": "",
         "is_quote_status": "",
-        "is_retweet": False,
+        "is_retweet": "",
         "quoted_status_id": "",
         "retweet_count": "",
         "retweeted_status_id": "",
@@ -29,7 +30,6 @@ def getNewTweet():
 
 
 if __name__ == '__main__':
-    outfile = join(DATA_DIR, "search.json")
     with open(outfile, "w") as f:
         json.dump([], f)
     tweets = []
@@ -47,7 +47,7 @@ if __name__ == '__main__':
         if count%1000 == 0:
             with open(outfile) as f:
                 data = json.load(f);
-            data.append(tweets)
+            data += tweets
             tweets = []
             with open(outfile, 'w') as f:
                 json.dump(data, f, indent=2)
