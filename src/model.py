@@ -45,7 +45,28 @@ def normaliseWeights(graph, users, tweets):
     #     i = tweets[t].get("pos") - n
     #     retweeted = tweets[t].get(RETWEETED)
     #     tweet_tweet[:,i] /= max(retweeted, 1)
-    # print(graph)
+    print(graph)
+
+def getNorm(a,b):
+    n = len(a)
+    diff = 0
+    for i in range(0,n):
+        diff += (b[i] - a[i])
+    return diff
+
+def tuRank(graph, n, m):
+    r = [1]*(n+m)
+    rtemp = [1]*(n+m)
+
+    while (getNorm(r,rtemp) > EPSILON):
+        for i in range(0, n+m):
+            for j in range(0,n+m):
+                rtemp[i] += graph[j][i]*r[j]
+            rtemp[i] += (1-d)/(n+m)
+        r = deepcopy(rtemp)
+
+    print(r)
+    return r
 
 
 
@@ -105,3 +126,6 @@ if __name__ == '__main__':
     print("No. of users:", i)
     graph = buildGraph(tweetData, userData, users, tweets)
     np.save(MODEL_GRAPH_FILE, graph)
+
+    tuRank(graph,i,j)
+
