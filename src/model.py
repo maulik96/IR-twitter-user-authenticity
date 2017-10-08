@@ -45,7 +45,7 @@ def normaliseWeights(graph, users, tweets):
     #     i = tweets[t].get("pos") - n
     #     retweeted = tweets[t].get(RETWEETED)
     #     tweet_tweet[:,i] /= max(retweeted, 1)
-    print(graph)
+    # print(graph)
 
 
 
@@ -104,4 +104,4 @@ if __name__ == '__main__':
     print("No. of tweets:", j)
     print("No. of users:", i)
     graph = buildGraph(tweetData, userData, users, tweets)
-
+    np.save(MODEL_GRAPH_FILE, graph)

@@ -11,6 +11,8 @@ TWEETS_TO_CRAWL = 1000
 DATA_DIR = join(dirname(dirname(realpath(__file__))), "data")
 TWEET_DATAFILE = join(DATA_DIR, "tweets.json")
 USER_DATAFILE = join(DATA_DIR, "users.json")
+MODEL_GRAPH_FILE = join(DATA_DIR, "graph.npy")
+
 
 RETWEET = 0
 RETWEETED = 1
