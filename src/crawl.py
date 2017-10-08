@@ -2,13 +2,9 @@ import json
 import sys
 from twarc import Twarc
 from constants import *
+from crawl_users import crawlUserData
 
-t = Twarc("22GyvUC4Jg89Eh1PuKRh3mwRo", 
-          "m75gOSwIccfzYLWxwMCpHEldxgzYP83pTOSqAFbumQ5B6OF1vC",
-          "852540250467467266-NoSAf6ZXmWZnr01CdUIfYBP5Z4cLZGJ",
-          "kWP6L9F4YCUAsvwuaruuCUPMc4JqAE2jhJA8bhuuQSCSu")
-
-def getNewTweet():
+def newTweet():
     tweet = {
         "id": "",
         "favorite_count": "",
@@ -26,29 +22,32 @@ def getNewTweet():
 
 
 if __name__ == '__main__':
-    with open(DATA_FILE, "w") as f:
+    with open(TWEET_DATAFILE, "w") as f:
         json.dump([], f)
     tweets = []
+    users = set()
     count = 0
-    for tweet in t.search("trump"):
+    for tweet in twarc.search("trump"):
         count += 1
-        tw = getNewTweet()
+        tw = newTweet()
         for attr in tw:
             tw[attr] = tweet.get(attr)
         tw["user_id"] = tweet["user"]["id"]
+        users.add(tweet["user"]["id"])
         if tweet.get("retweeted_status"):
             tw["is_retweet"] = True
             tw["retweeted_status_id"] = tweet["retweeted_status"]["id"]
         tweets.append(tw)
-        if count%(TWEETS_TO_CRAWL/10) == 0:
-            with open(DATA_FILE) as f:
+        if count%(max(10, TWEETS_TO_CRAWL/1000)) == 0:
+            with open(TWEET_DATAFILE) as f:
                 data = json.load(f);
             data += tweets
             tweets = []
-            with open(DATA_FILE, 'w') as f:
+            with open(TWEET_DATAFILE, 'w') as f:
                 json.dump(data, f, indent=2)
             sys.stdout.write('\r')
             sys.stdout.write('{} tweets searched'.format(count))
             sys.stdout.flush()
         if count == TWEETS_TO_CRAWL:
             break
+    crawlUserData(users)
