@@ -62,7 +62,7 @@ def tuRank(graph, n, m):
         for i in range(0, n+m):
             for j in range(0,n+m):
                 rtemp[i] += graph[j][i]*r[j]
-            rtemp[i] += (1-d)/(n+m)
+            rtemp[i] += ((1-d)/(n+m))
         r = deepcopy(rtemp)
 
     print(r)
