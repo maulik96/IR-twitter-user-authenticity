@@ -21,3 +21,5 @@ if __name__ == '__main__':
 
     for tw in tweets:
         users.add(tw.get('user_id'))
+
+    crawlUserData(users)

@@ -1,4 +1,5 @@
 import json
+import os
 import sys
 from twarc import Twarc
 from constants import *
@@ -22,6 +23,8 @@ def newTweet():
 
 
 if __name__ == '__main__':
+    if not os.path.exists(DATA_DIR):
+        os.makedirs(DATA_DIR)
     with open(TWEET_DATAFILE, "w") as f:
         json.dump([], f)
     tweets = []
