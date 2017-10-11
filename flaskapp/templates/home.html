@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+
+
+{# Page variables #}
+{% set head_title       = "Twitter User Authenticity" %}
+{% set assets_css       = "home_css" %}
+{% set assets_js        = "home_js" %}
+{% set nav_bar          = True %}
+{% set nav_title        = "Twitter User Authenticity" %}
+
+
+
+{# Head block #}
+{% block head %}
+
+{% endblock %}
+
+
+
+{# Body content #}
+{% block body %}
+
+<div class="container">
+
+    <h1 class="text-center">Manual user tagging</h1>
+
+    <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="user-card" id="headerCard">
+        <div class="row">
+            <div class="col-sm-6">
+                <strong>User handle</strong>
+                <br>
+                <strong>User ID</strong>
+            </div>
+            <div class="col-sm-3">
+                <strong>Authenticity score</strong>
+            </div>
+            <div class="col-sm-3">
+                <strong>Manual tag</strong>
+            </div>
+        </div>
+        </div>
+        {% for x in users %}
+            <div class="user-card">
+            <div class="row">
+                <div class="col-sm-6">
+                    <a href="https://twitter.com/{{ x['user_handle'] }}">{{ x['user_handle'] }}</a>
+                    <br>
+                    {{ x['user_id'] }}
+                </div>
+                <div class="col-sm-3">
+                    {{ x['authenticity_score'] }}
+                </div>
+                <div class="col-sm-3">
+                    {{ x['manual_tag'] }}
+                </div>
+            </div>
+            </div>
+        {% endfor %}
+    </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+
+{# Scripts block #}
+{% block scripts %}
+
+{% endblock %}
