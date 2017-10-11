@@ -12,21 +12,23 @@ def getNorm(a,b):
 
 def tuRank(graph):
     n = len(graph)
-    r = [1.0]*(n)
-    rtemp = [0.0]*(n)
-
-    while (getNorm(r,rtemp) > EPSILON):
-        rtemp = [0.0]*(n)
+    r =  np.ones((n))
+    rtemp = np.zeros((n))
+    graphT = np.transpose(graph)
+    while True:
+        rtemp = np.zeros((n))
         rnorm = 0
-        for i in range(0, n):
-            for j in range(0,n):
-                rtemp[i] += graph[j][i]*r[j]
-            rtemp[i] += ((1-d)/(n))
-            rnorm += abs(rtemp[i])
-        rtemp = [i/rnorm for i in rtemp]
-
+        # for i in range(0, n):
+        #     for j in range(0,n):
+        rtemp += np.matmul(graphT, r)
+        rtemp += ((1-d)/(n))
+        rnorm = sum(rtemp)
+        rtemp /= rnorm
+        print(getNorm(r,rtemp))
+        if getNorm(r,rtemp) < EPSILON:
+            break
         r = copy.deepcopy(rtemp)
-    return r
+    return rtemp
 
 if __name__ == '__main__':
     graph = np.load(MODEL_GRAPH_FILE)
@@ -42,7 +44,7 @@ if __name__ == '__main__':
     r = r[:len(users)]
     result = {}
     print(len(r))
-    print(len(users))
+    # print(len(users))
     print(set(r))
     for i in range(len(r)):
         result[users[i]] = r[i]

@@ -31,7 +31,7 @@ with open(USER_TWEET_CSV, "w") as f:
 	writer.writerows(relations)
 
 relations = [[":START_ID(Tweet)",":END_ID(Tweet)",":TYPE"]]
-tweets = set(tweets)
+tweets = set([i[0] for i in tweets])
 with open(TWEET_TWEET_CSV, "w") as f:
 	for tweet in data:
 		if(tweet["is_retweet"] is True):

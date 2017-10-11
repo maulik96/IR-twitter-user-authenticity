@@ -7,6 +7,7 @@ def crawlUserData(users):
     print("Crawling user data...")
     with open(USER_DATAFILE, "w") as f:
         json.dump({}, f)
+    return
     data = {}
     count = 0
     n = len(users)
