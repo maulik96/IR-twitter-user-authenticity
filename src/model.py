@@ -26,7 +26,6 @@ def newUser(pos):
 
 
 def normaliseWeights(graph, users, tweets):
-    print(graph)
     n = len(users)
     m = len(tweets)
     hsplit = np.split(graph, [n])
@@ -45,29 +44,6 @@ def normaliseWeights(graph, users, tweets):
     #     i = tweets[t].get("pos") - n
     #     retweeted = tweets[t].get(RETWEETED)
     #     tweet_tweet[:,i] /= max(retweeted, 1)
-    print(graph)
-
-def getNorm(a,b):
-    n = len(a)
-    diff = 0
-    for i in range(0,n):
-        diff += (b[i] - a[i])
-    return diff
-
-def tuRank(graph, n, m):
-    r = [1]*(n+m)
-    rtemp = [1]*(n+m)
-
-    while (getNorm(r,rtemp) > EPSILON):
-        for i in range(0, n+m):
-            for j in range(0,n+m):
-                rtemp[i] += graph[j][i]*r[j]
-            rtemp[i] += ((1-d)/(n+m))
-        r = deepcopy(rtemp)
-
-    print(r)
-    return r
-
 
 
 def buildGraph(tweetData, userData, users, tweets):
@@ -115,7 +91,7 @@ if __name__ == '__main__':
     for tweet in tweetData:
         tweets[tweet["id"]] = newTweet()
         if not users.get(tweet["user_id"]):
-            users[tweet["user_id"]] = newUser(j)
+            users[tweet["user_id"]] = newUser(i)
             i += 1
         j += 1
     k = 0
@@ -126,6 +102,5 @@ if __name__ == '__main__':
     print("No. of users:", i)
     graph = buildGraph(tweetData, userData, users, tweets)
     np.save(MODEL_GRAPH_FILE, graph)
-
-    tuRank(graph,i,j)
-
+    with open(USER_DATA, "w") as f:
+        json.dump(users, f)
