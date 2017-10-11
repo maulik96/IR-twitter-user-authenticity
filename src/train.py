@@ -7,7 +7,7 @@ def getNorm(a,b):
     n = len(a)
     diff = 0
     for i in range(0,n):
-        diff += (b[i] - a[i])
+        diff += abs(b[i] - a[i])
     return abs(diff)
 
 def tuRank(graph):
@@ -17,10 +17,14 @@ def tuRank(graph):
 
     while (getNorm(r,rtemp) > EPSILON):
         rtemp = [0.0]*(n)
+        rnorm = 0
         for i in range(0, n):
             for j in range(0,n):
                 rtemp[i] += graph[j][i]*r[j]
             rtemp[i] += ((1-d)/(n))
+            rnorm += abs(rtemp[i])
+        rtemp = [i/rnorm for i in rtemp]
+
         r = copy.deepcopy(rtemp)
     return r
 
