@@ -14,16 +14,16 @@ for tweet in data:
 users = [[u] for u in users]
 users = [["userId:ID(User)"]] + users
 
-with open(TWEETs_CSV, "wb") as f:
+with open(TWEETs_CSV, "w") as f:
     writer = csv.writer(f)
     writer.writerows(tweets)
 
-with open(USER_CSV, "wb") as f:
+with open(USER_CSV, "w") as f:
     writer = csv.writer(f)
     writer.writerows(users)
 
 relations = [[":START_ID(User)",":END_ID(Tweet)",":TYPE"]]
-with open(USER_TWEET_CSV, "wb") as f:
+with open(USER_TWEET_CSV, "w") as f:
 	for tweet in data:
 		relations.append([tweet["user_id"], tweet["id"], "Post"])
 		relations.append([tweet["id"], tweet["user_id"], "Posted"])
@@ -31,7 +31,8 @@ with open(USER_TWEET_CSV, "wb") as f:
 	writer.writerows(relations)
 
 relations = [[":START_ID(Tweet)",":END_ID(Tweet)",":TYPE"]]
-with open(TWEET_TWEET_CSV, "wb") as f:
+tweets = set(tweets)
+with open(TWEET_TWEET_CSV, "w") as f:
 	for tweet in data:
 		if(tweet["is_retweet"] is True):
 			retweetId = tweet["retweeted_status_id"]
