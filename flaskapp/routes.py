@@ -12,13 +12,14 @@ def homePage():
         return render_template('home.html', users=res)
 
 
-@routes_module.route('/tag/<user_id>/<tag_value>', methods=["POST"])
+@routes_module.route('/tag/', methods=["POST"])
 def tagUser():
     if request.method == 'POST':
         db = var.mongo.db
+        user_id = int(request.form["user_id"])
+        tag_value = request.form["tag_value"]
         res = db.twitusers.update_one(
             {"user_id": user_id},
-            {"$set": {"manual_tag": tag_value}},
-            upsert=False
+            {"$set": {"manual_tag": tag_value}}
         )
-        return jsonify(res)
+        return jsonify({"user_id": user_id, "tag_value": tag_value})

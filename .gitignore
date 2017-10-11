@@ -9,4 +9,8 @@ venv_py3/
 # Data files
 data/
 
+# Flask public assets
+flaskapp/static/public
+flaskapp/static/.webassets-cache
+
 .pyc

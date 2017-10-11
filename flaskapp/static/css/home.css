@@ -6,6 +6,19 @@ body {
     background: #fff;
     padding: 10px;
     margin-top: 10px;
+    transition: background 0.2s;
+}
+.user-card.none {
+    background: #fff;
+}
+.user-card.no {
+    background: hsla(5,78%,57%,0.5);
+}
+.user-card.yes {
+    background: hsla(145,63%,49%,0.5);
+}
+.user-card.pending {
+    background: #3498DB;
 }
 
 #headerCard {

@@ -18,6 +18,7 @@
 
 
 
+
 {# Body content #}
 {% block body %}
 
@@ -43,18 +44,21 @@
         </div>
         </div>
         {% for x in users %}
-            <div class="user-card">
+            {% set id = x['user_id'] %}
+            <div class="user-card {{x['manual_tag']}}" id="{{id}}">
             <div class="row">
                 <div class="col-sm-6">
-                    <a href="https://twitter.com/{{ x['user_handle'] }}">{{ x['user_handle'] }}</a>
+                    <a href="https://twitter.com/{{ x['user_handle'] }}" target="_blank">{{ x['user_handle'] }}</a>
                     <br>
-                    {{ x['user_id'] }}
+                    {{ id }}
                 </div>
                 <div class="col-sm-3">
                     {{ x['authenticity_score'] }}
                 </div>
                 <div class="col-sm-3">
-                    {{ x['manual_tag'] }}
+                    <button class="btn btn-block btn-xs btn-success" onclick="tagUser({{id}},'yes')">Credible</button><br>
+                    <button class="btn btn-block btn-xs btn-warning" onclick="tagUser({{id}},'no')">Not credible</button><br>
+                    <button class="btn btn-block btn-xs btn-default" onclick="tagUser({{id}},'none')">Not sure</button>
                 </div>
             </div>
             </div>
