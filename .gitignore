@@ -8,3 +8,5 @@ venv_py3/
 
 # Data files
 data/
+
+.pyc
