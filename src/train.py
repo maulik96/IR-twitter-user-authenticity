@@ -30,6 +30,14 @@ def tuRank(graph):
         r = copy.deepcopy(rtemp)
     return rtemp
 
+def normaliseScores(a):
+    nmax = max(a)
+    nmin = min(a)
+    a -= nmin
+    if nmax==nmin:
+        return
+    a /= (nmax-nmin)
+
 if __name__ == '__main__':
     graph = np.load(MODEL_GRAPH_FILE)
         
@@ -43,8 +51,9 @@ if __name__ == '__main__':
 
     r = r[:len(users)]
     result = {}
-    print(len(r))
+    # print(len(r))
     # print(len(users))
+    normaliseScores(r)
     print(set(r))
     for i in range(len(r)):
         result[users[i]] = r[i]
