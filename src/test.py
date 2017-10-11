@@ -7,24 +7,31 @@ with open(USER_CSV, 'r') as f:
     reader = csv.reader(f)
     user_list = list(reader)
 
-users = user_list.join(",")
+user_list = [u[0] for u in user_list]
 
 i = 0
-for user in twarc.user_lookup(users):
-	i += 1
-	usernames = {}
-	print(user["id"])
+verified = {}
+usernames = {}
+for user in twarc.user_lookup(user_ids=user_list):
+    i += 1
+    usernames[user["id"]] = user["screen_name"]
 
-	usernames[user["id"]] = user["screen_name"]
-	with open(USERNAMES_FILE,"w") as f:
-		json.dump(usernames,f)
+    if user["verified"]:
+        verified[user["id"]] = user["screen_name"]
+        print(user["screen_name"])
+    
+    if(i%100 == 0):
+        # sys.stdout.write('\r')
+        sys.stdout.write("Checked {} users.\n".format(i))
+        # sys.stdout.flush()
+        with open(USERNAMES_FILE,"w") as f:
+            json.dump(usernames,f)
 
-	if user["verified"]:
-		print(user["screen_name"])
-	if(i%100 == 0):
-		# sys.stdout.write('\r')
-		sys.stdout.write("Checked {} users.".format(i))
-		# sys.stdout.flush()
+with open(VERIFIED_USERS,"w") as f:
+    json.dump(verified,f)
+
+with open(USERNAMES_FILE,"w") as f:
+    json.dump(usernames,f)
 
 print("Checked {} users.".format(i))
-# print(i)
+print("Total {}  verified users.".format(len(verified)))

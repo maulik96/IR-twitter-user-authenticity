@@ -15,6 +15,7 @@ MODEL_GRAPH_FILE = join(DATA_DIR, "graph.npy")
 USER_DATA = join(DATA_DIR, "users.json")
 RATINGS_FILE = join(DATA_DIR, "ratings.json")
 USERNAMES_FILE = join(DATA_DIR, "usernames.json")
+VERIFIED_USERS = join(DATA_DIR, "verified.json")
 
 USER_CSV = join(DATA_DIR, "users.csv")
 TWEETs_CSV = join(DATA_DIR, "tweets.csv")
