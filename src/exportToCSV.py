@@ -5,14 +5,13 @@ import json
 with open(TWEET_DATAFILE) as f:
 	data = json.load(f)
 
-tweets = [["tweetId:ID(Tweet)"]]
+tweets = []
 users = set()
 for tweet in data:
 	tweets.append([tweet["id"]])
 	users.add(tweet["user_id"])
 
 users = [[u] for u in users]
-users = [["userId:ID(User)"]] + users
 
 with open(TWEETs_CSV, "w") as f:
     writer = csv.writer(f)
