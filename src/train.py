@@ -25,6 +25,8 @@ def tuRank(graph):
         rnorm = sum(rtemp)
         rtemp /= rnorm
         print(getNorm(r,rtemp))
+        # print(r)
+        # print(rtemp)
         if getNorm(r,rtemp) < EPSILON:
             break
         r = copy.deepcopy(rtemp)
@@ -40,7 +42,8 @@ def normaliseScores(a):
 
 if __name__ == '__main__':
     graph = np.load(MODEL_GRAPH_FILE)
-        
+    
+    # print(graph)        
     r = tuRank(graph)
     with open(USER_DATA) as f:
        data = json.load(f)
