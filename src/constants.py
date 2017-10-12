@@ -22,6 +22,7 @@ USER_CSV = join(DATA_DIR, "users.csv")
 TWEETs_CSV = join(DATA_DIR, "tweets.csv")
 USER_TWEET_CSV = join(DATA_DIR, "userTweetRelationship.csv")
 TWEET_TWEET_CSV = join(DATA_DIR, "tweetTweetRelationship.csv")
+RATINGS_CSV = join(DATA_DIR, "ratings.csv")
 
 
 RETWEET = 0

@@ -1,5 +1,6 @@
 from constants import *
 import json
+import csv
 from collections import Counter
 
 def checkForVerifiedUsers():
@@ -21,5 +22,16 @@ def checkForVerifiedUsers():
         print(u[0])
     print(count)
 
+def ratingsToCsv():
+    with open(RATINGS_FILE) as f:
+        data = json.load(f)
+    ratings = [["User", "Rating"]]
+    for u in data:
+        ratings.append([u, data[u]])
+    with open(RATINGS_CSV, "w") as f:
+        writer = csv.writer(f)
+        writer.writerows(ratings)
+
 if __name__ == '__main__':
-    checkForVerifiedUsers()
+    # checkForVerifiedUsers()
+    ratingsToCsv()
