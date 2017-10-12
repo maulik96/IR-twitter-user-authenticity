@@ -17,7 +17,7 @@ def checkForVerifiedUsers():
     count = 0
     for u in d.most_common(k):
         if u[0] in users:
-            count++
+            count+=1
         print(u[0])
     print(count)
 

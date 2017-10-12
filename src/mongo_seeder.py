@@ -6,19 +6,29 @@ client = MongoClient('localhost', 27017)
 db = client['twit_user_auth']
 
 parent_dir_path = dirname(dirname(realpath(__file__)))
-data_file = join(parent_dir_path, "data", "usernames.json")
-# data_file = join(parent_dir_path, "sample_data", "usernames.json")
+user_file = join(parent_dir_path, "data", "usernames.json")
+ratings_file = join(parent_dir_path, "data", "ratings.json")
+verified_file = join(parent_dir_path, "data", "verified.json")
 
-with open(data_file) as f:
+with open(user_file) as f:
     usernames = json.load(f)
+with open(ratings_file) as f:
+    ratings = json.load(f)
+with open(verified_file) as f:
+    verified = json.load(f)
 
 docs = []
 for x in usernames:
+    rating = ratings[x]
+    ver_user = 0
+    if x in verified:
+        ver_user = 1
     doc = {
         "user_id": int(x),
         "user_handle": usernames[x],
-        "authenticity_score": -1,
-        "manual_tag": "untagged"
+        "authenticity_score": rating,
+        "manual_tag": "untagged",
+        "verified": ver_user
     }
     docs.append(doc)
 
