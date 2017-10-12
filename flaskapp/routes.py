@@ -1,6 +1,5 @@
 from flask import Blueprint, request, render_template, jsonify
 import shared_variables as var
-import random
 
 routes_module = Blueprint('routes_module', __name__)
 
@@ -9,10 +8,7 @@ routes_module = Blueprint('routes_module', __name__)
 def homePage():
     if request.method == 'GET':
         db = var.mongo.db
-        ver_users = list(db.twitusers.find({"verified":1}))
-        nonver_users = list(db.twitusers.find({"verified":0}).limit(500))
-        users = ver_users + nonver_users
-        random.shuffle(users)
+        users = db.twitusers.find({"verified":0}).sort("user_id").limit(500)
         return render_template('home.html', users=users)
 
 
