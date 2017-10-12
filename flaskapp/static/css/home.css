@@ -8,7 +8,7 @@ body {
     margin-top: 10px;
     transition: background 0.2s;
 }
-.user-card.none {
+.user-card.untagged {
     background: #fff;
 }
 .user-card.no {
@@ -16,6 +16,9 @@ body {
 }
 .user-card.yes {
     background: hsla(145,63%,49%,0.5);
+}
+.user-card.unsure {
+    background: yellow;
 }
 .user-card.pending {
     background: #3498DB;

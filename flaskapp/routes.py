@@ -8,7 +8,7 @@ routes_module = Blueprint('routes_module', __name__)
 def homePage():
     if request.method == 'GET':
         db = var.mongo.db
-        res = db.twitusers.find().sort("authenticity_score")
+        res = db.twitusers.find()
         return render_template('home.html', users=res)
 
 
