@@ -28,4 +28,5 @@ Estimating trustworthiness for a twitter user using a heterogeneous networkÂ ofÂ
   * ```user_id```
   * ```user_handle```
   * ```authenticity_score``` : Value between 0 to 1
-  * ```manual_tag``` : Can be 0 (not alloted / not sure) / -1 (not credible) / 1 (credible user)
+  * ```manual_tag``` : Can be ```untagged``` / ```no``` (not credible) / ```yes``` (credible user) / ```unsure```
+  * ```verified``` : 1 for verified twitter users, otherwise 0

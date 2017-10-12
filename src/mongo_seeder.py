@@ -17,20 +17,30 @@ with open(ratings_file) as f:
 with open(verified_file) as f:
     verified = json.load(f)
 
-docs = []
-for x in usernames:
-    rating = ratings[x]
-    ver_user = 0
-    if x in verified:
-        ver_user = 1
-    doc = {
-        "user_id": int(x),
-        "user_handle": usernames[x],
-        "authenticity_score": rating,
-        "manual_tag": "untagged",
-        "verified": ver_user
-    }
-    docs.append(doc)
 
-db.twitusers.remove()
-db.twitusers.insert(docs)
+def db_init():
+    docs = []
+    for x in usernames:
+        rating = ratings[x]
+        ver_user = 0
+        if x in verified:
+            ver_user = 1
+        doc = {
+            "user_id": int(x),
+            "user_handle": usernames[x],
+            "authenticity_score": rating,
+            "manual_tag": "untagged",
+            "verified": ver_user
+        }
+        docs.append(doc)
+
+    db.twitusers.remove()
+    db.twitusers.insert(docs)
+
+
+def db_verify():
+    db.twitusers.update_many({"verified":1}, {"$set":{"manual_tag":"yes"}})
+
+
+# db_init()
+db_verify()
