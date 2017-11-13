@@ -25,6 +25,53 @@ def newUser(pos):
     } 
 
 
+def addRandomWeight(A, users, tweets):
+    user_scores = [0]*len(users)
+    tweet_scores = [0]*len(tweets)
+
+
+    with open(FOLLOW_FILE) as f:
+        followData = json.load(f)
+    with open(RETWEET_FILE) as f:
+        retweetData = json.load(f)
+
+    for u in users:
+            user_scores[users[int(u)].get("pos")] =  float(followData[str(u)]["followers"]**2)/ (followData[str(u)]["following"]+1)
+   
+    normaliseScores(user_scores)
+
+    for t in tweets:
+        tweet_scores[tweets[t].get("pos") -len(users)] = float(retweetData[str(t)])
+    normaliseScores(tweet_scores)
+
+    all_scores = user_scores + tweet_scores
+
+    # print all_scores
+
+    total = sum(all_scores)
+    if total!=0:
+        for score in all_scores:
+            score/=total
+
+    for i in range(len(A)):
+        A[:,i] *= d
+        A[:,i] +=(1-d)*all_scores[i]
+        
+    return A
+
+def normaliseScores(a):
+    nmax = max(a)
+    nmin = min(a)
+
+    for i in range(len(a)):
+        a[i] -= nmin
+    if nmax==nmin:
+        return
+
+    for i in range(len(a)):
+        a[i] /= (nmax-nmin)
+
+
 def normaliseWeights(graph, users, tweets):
     n = len(users)
     m = len(tweets)
@@ -76,7 +123,7 @@ def buildGraph(tweetData, userData, users, tweets):
             users[following][FOLLOWED] += 1
     
     normaliseWeights(A, users, tweets)
-    return A
+    return addRandomWeight(A, users, tweets)
 
 
 if __name__ == '__main__':

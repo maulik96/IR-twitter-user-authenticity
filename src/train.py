@@ -10,6 +10,7 @@ def getNorm(a,b):
         diff += abs(b[i] - a[i])
     return abs(diff)
 
+
 def tuRank(graph):
     n = len(graph)
     r =  np.ones((n))
@@ -25,8 +26,8 @@ def tuRank(graph):
         rnorm = sum(rtemp)
         rtemp /= rnorm
         print(getNorm(r,rtemp))
-        # print(r)
-        # print(rtemp)
+        print(r)
+        print(rtemp)
         if getNorm(r,rtemp) < EPSILON:
             break
         r = copy.deepcopy(rtemp)
@@ -58,6 +59,7 @@ if __name__ == '__main__':
     # print(len(users))
     normaliseScores(r)
     print(set(r))
+
     for i in range(len(r)):
         result[users[i]] = r[i]
     with open(RATINGS_FILE, "w") as f:
