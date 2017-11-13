@@ -12,17 +12,17 @@ weights[POSTED] = 0.6
 
 def newTweet():
     return {
-        "pos" : 0,
+        "pos": 0,
         RETWEETED: 0,
-    } 
+    }
 
 def newUser(pos):
     return {
-        "pos" : pos,
+        "pos": pos,
         FOLLOW: 0,
         FOLLOWED: 0,
         POST: 0,
-    } 
+    }
 
 
 def addRandomWeight(A, users, tweets):
@@ -34,10 +34,10 @@ def addRandomWeight(A, users, tweets):
         followData = json.load(f)
     with open(RETWEET_FILE) as f:
         retweetData = json.load(f)
-
+    import pudb; pudb.set_trace()
     for u in users:
-            user_scores[users[int(u)].get("pos")] =  float(followData[str(u)]["followers"]**2)/ (followData[str(u)]["following"]+1)
-   
+        user_scores[users[int(u)].get("pos")] =  float(followData[str(u)]["followers"]**2)/ (followData[str(u)]["following"]+1)
+
     normaliseScores(user_scores)
 
     for t in tweets:
@@ -56,7 +56,7 @@ def addRandomWeight(A, users, tweets):
     for i in range(len(A)):
         A[:,i] *= d
         A[:,i] +=(1-d)*all_scores[i]
-        
+
     return A
 
 def normaliseScores(a):
@@ -77,7 +77,7 @@ def normaliseWeights(graph, users, tweets):
     m = len(tweets)
     hsplit = np.split(graph, [n])
     (user_user, user_tweet, tweet_user, tweet_tweet) = (np.split(hsplit[0],[n], axis=1)[0], np.split(hsplit[0],[n], axis=1)[1], np.split(hsplit[1],[n], axis=1)[0], np.split(hsplit[1],[n], axis=1)[1])
-    
+
     for u in users:
         i = users[u].get("pos")
         follow = users[u].get(FOLLOW)
@@ -97,7 +97,7 @@ def buildGraph(tweetData, userData, users, tweets):
     n = len(users)
     m = len(tweets)
     A = np.zeros((n+m, n+m))
-    
+
     for tw in tweetData:
         tweet = tw.get("id")
         user = tw.get("user_id")
@@ -121,7 +121,7 @@ def buildGraph(tweetData, userData, users, tweets):
             users[user][FOLLOW] += 1
             A[f.get("pos")][u.get("pos")] = weights[FOLLOWED]
             users[following][FOLLOWED] += 1
-    
+
     normaliseWeights(A, users, tweets)
     return addRandomWeight(A, users, tweets)
 
