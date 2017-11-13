@@ -7,13 +7,13 @@ db = client['twit_user_auth']
 
 parent_dir_path = dirname(dirname(realpath(__file__)))
 user_file = join(parent_dir_path, "data", "usernames.json")
-ratings_file = join(parent_dir_path, "data", "ratings.json")
+# ratings_file = join(parent_dir_path, "data", "ratings.json")
 verified_file = join(parent_dir_path, "data", "verified.json")
 
 with open(user_file) as f:
     usernames = json.load(f)
-with open(ratings_file) as f:
-    ratings = json.load(f)
+# with open(ratings_file) as f:
+#     ratings = json.load(f)
 with open(verified_file) as f:
     verified = json.load(f)
 
@@ -21,7 +21,8 @@ with open(verified_file) as f:
 def db_init():
     docs = []
     for x in usernames:
-        rating = ratings[x]
+        rating = 0
+        # rating = ratings[x]
         ver_user = 0
         if x in verified:
             ver_user = 1
@@ -42,5 +43,5 @@ def db_verify():
     db.twitusers.update_many({"verified":1}, {"$set":{"manual_tag":"yes"}})
 
 
-# db_init()
+db_init()
 db_verify()

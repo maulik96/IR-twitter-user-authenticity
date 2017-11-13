@@ -28,7 +28,7 @@ for user in twarc.user_lookup(user_ids=user_list):
         verified[user["id"]] = user["screen_name"]
         print(user["screen_name"])
     
-    if(i%100 == 0):
+    if(i%100 == 0 or len(user_list)-i < 100):
         # sys.stdout.write('\r')
         sys.stdout.write("Checked {} users.\n".format(i))
         # sys.stdout.flush()
