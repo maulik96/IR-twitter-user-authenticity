@@ -3,7 +3,6 @@ import os
 import sys
 from twarc import Twarc
 from constants import *
-from crawl_users import crawlUserData
 
 def newTweet():
     tweet = {
@@ -40,6 +39,7 @@ if __name__ == '__main__':
         if tweet.get("retweeted_status"):
             tw["is_retweet"] = True
             tw["retweeted_status_id"] = tweet["retweeted_status"]["id"]
+            tw["retweet_count"] = 0
         tweets.append(tw)
         if count%(max(10, TWEETS_TO_CRAWL/1000)) == 0:
             with open(TWEET_DATAFILE) as f:
@@ -53,4 +53,3 @@ if __name__ == '__main__':
             sys.stdout.flush()
         if count == TWEETS_TO_CRAWL:
             break
-    crawlUserData(users)
