@@ -7,7 +7,7 @@ venv/
 venv_py3/
 
 # Data files
-# data/
+data/
 
 # Flask public assets
 flaskapp/static/public
