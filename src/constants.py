@@ -17,6 +17,7 @@ RATINGS_FILE = join(DATA_DIR, "ratings.json")
 USERNAMES_FILE = join(DATA_DIR, "usernames.json")
 VERIFIED_USERS = join(DATA_DIR, "verified.json")
 TOPUSERS_FILE = join(DATA_DIR, "topUsers.json")
+TOPUSERS_OLD_FILE = join(DATA_DIR, "topUsersOld.json")
 FOLLOW_FILE = join(DATA_DIR, "follow.json")
 RETWEET_FILE = join(DATA_DIR, "retweets.json")
 

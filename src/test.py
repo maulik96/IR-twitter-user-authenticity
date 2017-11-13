@@ -3,6 +3,11 @@ import json
 import csv
 from collections import Counter
 import matplotlib.pyplot as plt
+from pymongo import MongoClient
+
+client = MongoClient('localhost', 27017)
+db = client['twit_user_auth']
+
 
 def checkForVerifiedUsers():
     with open(RATINGS_FILE) as f:
@@ -33,23 +38,36 @@ def ratingsToCsv():
         writer = csv.writer(f)
         writer.writerows(ratings)
 
+def getPoints(users):
+    total = 0.0
+    x,y = [],[]
+    i = 0
+    for u in users:
+        i += 1
+        tag = db.twitusers.find_one({'user_id':u}).get("manual_tag")
+        if tag == "yes":
+            rating = 1.0
+        elif tag == "no":
+            rating = 0.0
+        else:
+            rating = 0.5
+        total += rating
+        if i%5 == 0:
+            avg = total/i
+            x.append(i)
+            y.append(avg)
+    return x,y
+
 def generateTopUserGraphs():
     with open(TOPUSERS_FILE) as f:
         data = json.load(f)
-    i = 0
-    pts = [[],[]]
-    total = 0.0
-    for u in data:
-        i += 1
-        total += u[1]
-        if i%5 == 0:
-            avg = total/i
-            pts[0].append(i)
-            pts[1].append(avg)
-    print(pts)
-    line2, = plt.plot(pts[0], pts[1], '-o', label='Our method')
-    pts = [[5, 10, 15, 20, 25], [0.3811433262989935, 0.24236761097017653, 0.19182337651553366, 0.1579906961936422, 0.13558378660579276]]
-    line1, = plt.plot(pts[0], pts[1], '-o', label='TU rank')
+    x,y = getPoints([int(u[0]) for u in data])
+    line1, = plt.plot(x,y, '-o', label='Our method')
+    with open(TOPUSERS_OLD_FILE) as f:
+        data = json.load(f)
+    x,y = getPoints([int(u[0]) for u in data])
+    line2, = plt.plot(x,y, '-o', label='TU Rank')
+    
     plt.legend(handles=[line1, line2])
     plt.title("Average Adequacy of Top k Users")
     plt.ylabel('Adequacy')

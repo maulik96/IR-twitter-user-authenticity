@@ -29,7 +29,7 @@ if __name__ == '__main__':
     tweets = []
     users = set()
     count = 0
-    for tweet in twarc.search("trump"):
+    for tweet in twarc.search("trump", max_id=928149460303020032):
         count += 1
         tw = newTweet()
         for attr in tw:

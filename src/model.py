@@ -34,7 +34,7 @@ def addRandomWeight(A, users, tweets):
         followData = json.load(f)
     with open(RETWEET_FILE) as f:
         retweetData = json.load(f)
-    import pudb; pudb.set_trace()
+
     for u in users:
         user_scores[users[int(u)].get("pos")] =  float(followData[str(u)]["followers"]**2)/ (followData[str(u)]["following"]+1)
 
