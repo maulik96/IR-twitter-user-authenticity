@@ -15,7 +15,7 @@ def checkForVerifiedUsers():
     with open(VERIFIED_USERS) as f:
         users = json.load(f)
     
-    k = 25
+    k = 50
     d = Counter(ratings)
         
     with open(TOPUSERS_FILE, "w") as f:
@@ -81,6 +81,6 @@ def generateTopUserGraphs():
 
 
 if __name__ == '__main__':
-    checkForVerifiedUsers()
-    ratingsToCsv()
-    # generateTopUserGraphs()
+    # checkForVerifiedUsers()
+    # ratingsToCsv()
+    generateTopUserGraphs()
