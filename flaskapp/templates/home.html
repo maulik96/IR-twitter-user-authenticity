@@ -46,7 +46,7 @@
         {% for x in users %}
             {% set id = x['user_id'] %}
             {% set handle = x['user_handle'] %}
-            <div class="user-card {{x['manual_tag']}}" id="{{id}}">
+            <div class="user-card {{x['manual_tag']}}" id="{{handle}}">
             <div class="row">
                 <div class="col-sm-6">
                     <a href="https://twitter.com/{{ x['user_handle'] }}" target="_blank">{{ x['user_handle'] }}</a>
