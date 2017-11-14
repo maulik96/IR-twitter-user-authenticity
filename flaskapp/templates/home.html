@@ -45,6 +45,7 @@
         </div>
         {% for x in users %}
             {% set id = x['user_id'] %}
+            {% set handle = x['user_handle'] %}
             <div class="user-card {{x['manual_tag']}}" id="{{id}}">
             <div class="row">
                 <div class="col-sm-6">
@@ -56,9 +57,9 @@
                     {{ x['authenticity_score'] }}
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-block btn-xs btn-success" onclick="tagUser({{id}},'yes')">Credible</button><br>
-                    <button class="btn btn-block btn-xs btn-warning" onclick="tagUser({{id}},'no')">Not credible</button><br>
-                    <button class="btn btn-block btn-xs btn-default" onclick="tagUser({{id}},'unsure')">Not sure</button>
+                    <button class="btn btn-block btn-xs btn-success" onclick="tagUser({{handle}},'yes')">Credible</button><br>
+                    <button class="btn btn-block btn-xs btn-warning" onclick="tagUser({{handle}},'no')">Not credible</button><br>
+                    <button class="btn btn-block btn-xs btn-default" onclick="tagUser({{handle}},'unsure')">Not sure</button>
                 </div>
             </div>
             </div>

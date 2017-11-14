@@ -37,4 +37,4 @@ FOLLOWED = 3
 POST = 4
 POSTED = 5
 EPSILON = 0.000001
-d = 0.85	
+d = 0.95	

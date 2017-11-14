@@ -19,6 +19,7 @@ def homePage():
             data = json.load(f)
             users += [int(u[0]) for u in data]
         db = var.mongo.db
+        print(len(users))
         users = db.twitusers.find({'user_id':{'$in' : users}})
         return render_template('home.html', users=users)
 
@@ -27,10 +28,10 @@ def homePage():
 def tagUser():
     if request.method == 'POST':
         db = var.mongo.db
-        user_id = int(request.form["user_id"])
+        user_handle = request.form["user_handle"]
         tag_value = request.form["tag_value"]
         res = db.twitusers.update_one(
-            {"user_id": user_id},
+            {"user_handle": user_handle},
             {"$set": {"manual_tag": tag_value}}
         )
-        return jsonify({"user_id": user_id, "tag_value": tag_value})
+        return jsonify({"user_handle": user_handle, "tag_value": tag_value})

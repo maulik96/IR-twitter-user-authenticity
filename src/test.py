@@ -5,7 +5,7 @@ from collections import Counter
 import matplotlib.pyplot as plt
 from pymongo import MongoClient
 
-client = MongoClient('localhost', 27017)
+client = MongoClient('34.227.207.177', 27017)
 db = client['twit_user_auth']
 
 
@@ -45,6 +45,7 @@ def getPoints(users):
     for u in users:
         i += 1
         tag = db.twitusers.find_one({'user_id':u}).get("manual_tag")
+        print(str(u) + " " + tag)
         if tag == "yes":
             rating = 1.0
         elif tag == "no":
@@ -61,10 +62,12 @@ def getPoints(users):
 def generateTopUserGraphs():
     with open(TOPUSERS_FILE) as f:
         data = json.load(f)
+    print("Getting data points for our method")
     x,y = getPoints([int(u[0]) for u in data])
     line1, = plt.plot(x,y, '-o', label='Our method')
     with open(TOPUSERS_OLD_FILE) as f:
         data = json.load(f)
+    print("Getting data points for TU rank")
     x,y = getPoints([int(u[0]) for u in data])
     line2, = plt.plot(x,y, '-o', label='TU Rank')
     
@@ -78,6 +81,6 @@ def generateTopUserGraphs():
 
 
 if __name__ == '__main__':
-    # checkForVerifiedUsers()
-    # ratingsToCsv()
-    generateTopUserGraphs()
+    checkForVerifiedUsers()
+    ratingsToCsv()
+    # generateTopUserGraphs()
