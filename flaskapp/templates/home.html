@@ -57,9 +57,9 @@
                     {{ x['authenticity_score'] }}
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-block btn-xs btn-success" onclick="tagUser({{handle}},'yes')">Credible</button><br>
-                    <button class="btn btn-block btn-xs btn-warning" onclick="tagUser({{handle}},'no')">Not credible</button><br>
-                    <button class="btn btn-block btn-xs btn-default" onclick="tagUser({{handle}},'unsure')">Not sure</button>
+                    <button class="btn btn-block btn-xs btn-success" onclick="tagUser({{id}}, '{{handle}}','yes')">Credible</button><br>
+                    <button class="btn btn-block btn-xs btn-warning" onclick="tagUser({{id}}, '{{handle}}','no')">Not credible</button><br>
+                    <button class="btn btn-block btn-xs btn-default" onclick="tagUser({{id}}, '{{handle}}','unsure')">Not sure</button>
                 </div>
             </div>
             </div>
